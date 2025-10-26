@@ -4,7 +4,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  - group: ACR-Secrets
+  - group: secrets-acr
   - name: TAG
     value: abb
 
@@ -58,8 +58,8 @@ stages:
       - task: AzureKeyVault@2
         displayName: "Retrieve SPN Credentials from Key Vault"
         inputs:
-          azureSubscription: "Azure-Terraform-Connection"
-          keyVaultName: "terraformSecretsforABB"
+          azureSubscription: "arm-service-connection"
+          keyVaultName: "SecretsforABB"
           secretsFilter: "spn-tenant-id,spn-client-id,spn-client-secret,subscription-id"
   
       - task: Bash@3
