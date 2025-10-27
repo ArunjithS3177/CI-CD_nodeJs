@@ -37,7 +37,7 @@ parameters:
   - name : resource_group
     displayName: Resource group Name
     type: string
-    default: 'Terraform-ABB-DEMO'
+    default: 'ABB-DEMO'
 
 stages:
 - stage: Build
