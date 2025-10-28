@@ -52,11 +52,11 @@ stages:
 
 
 - stage: Code_Analysis
-  displayName: 'SonarQube Code Analysis'
+  displayName: 'SonarCloud Code Analysis'
   dependsOn: Build
   jobs:
-    - job: SonarQube_Scan
-      displayName: 'Run SonarQube Analysis'
+    - job: SonarCloud_Scan
+      displayName: 'Run SonarCloud Analysis'
       pool:
         vmImage: 'ubuntu-latest'
 
@@ -64,21 +64,22 @@ stages:
         - checkout: self
 
         # 1️⃣ Prepare Analysis Configuration
-        - task: SonarQubePrepare@5
+        - task: SonarCloudPrepare@2
           inputs:
-            SonarQube: 'Sonarqube'      # <- Your service connection name
+            SonarCloud: 'Sonarqube'                   # Service connection name you created
+            organization: 'ARUNDEMO3177'              # Your SonarCloud organization name
             scannerMode: 'CLI'
             configMode: 'manual'
-            cliProjectKey: 'ARUNDEMO3177_DEMOABB'               # <- Project key from SonarQube
+            cliProjectKey: 'ARUNDEMO3177_DEMOABB'     # Project key from SonarCloud
             cliProjectName: 'DEMOABB'
             cliSources: '.'
 
         # 2️⃣ Run the Code Analysis
-        - task: SonarQubeAnalyze@5
+        - task: SonarCloudAnalyze@2
           displayName: 'Analyze Source Code'
 
-        # 3️⃣ Publish Results to SonarQube
-        - task: SonarQubePublish@5
+        # 3️⃣ Publish Results to SonarCloud
+        - task: SonarCloudPublish@2
           displayName: 'Publish Analysis Results'
           inputs:
             pollingTimeoutSec: '300'
