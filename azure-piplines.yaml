@@ -50,6 +50,39 @@ stages:
         docker push ${{ parameters.acr_name }}.azurecr.io/${{ parameters.image_name }}:$(TAG)
       displayName: 'Build and Push Docker Image'
 
+
+- stage: Code_Analysis
+  displayName: 'SonarQube Code Analysis'
+  dependsOn: Build
+  jobs:
+    - job: SonarQube_Scan
+      displayName: 'Run SonarQube Analysis'
+      pool:
+        vmImage: 'ubuntu-latest'
+
+      steps:
+        - checkout: self
+
+        # 1️⃣ Prepare Analysis Configuration
+        - task: SonarQubePrepare@5
+          inputs:
+            SonarQube: 'Sonarqube'      # <- Your service connection name
+            scannerMode: 'CLI'
+            configMode: 'manual'
+            cliProjectKey: 'ARUNDEMO3177_DEMOABB'               # <- Project key from SonarQube
+            cliProjectName: 'DEMOABB'
+            cliSources: '.'
+
+        # 2️⃣ Run the Code Analysis
+        - task: SonarQubeAnalyze@5
+          displayName: 'Analyze Source Code'
+
+        # 3️⃣ Publish Results to SonarQube
+        - task: SonarQubePublish@5
+          displayName: 'Publish Analysis Results'
+          inputs:
+            pollingTimeoutSec: '300'
+
 - stage: Deploy_to_AKS
   displayName: 'Deploy to AKS'
   jobs:
