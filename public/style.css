@@ -2,7 +2,7 @@
 body {
     font-family: 'Poppins', sans-serif;
     background: linear-gradient(135deg, #1e3c72, #2a5298);
-    color: #fff;
+    color: #f5f7fa; /* Softer white for better contrast */
     text-align: center;
     display: flex;
     justify-content: center;
@@ -20,7 +20,7 @@ body {
 
 /* Container card styling */
 .container {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.12);
     padding: 40px 60px;
     border-radius: 20px;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
@@ -32,7 +32,7 @@ body {
 h1 {
     font-size: 3rem;
     margin-bottom: 20px;
-    background: linear-gradient(to right, #00f2fe, #4facfe);
+    background: linear-gradient(to right, #00d4ff, #0078ff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -46,7 +46,7 @@ p {
 
 /* Highlight name */
 .highlight {
-    color: #00e0ff;
+    color: #00bfff;
     font-weight: 600;
 }
 
@@ -54,16 +54,19 @@ p {
 .btn {
     display: inline-block;
     padding: 12px 30px;
-    background: linear-gradient(to right, #4facfe, #00f2fe);
-    color: #fff;
+    background: linear-gradient(to right, #0078ff, #00bfff);
+    color: #f9f9f9; /* slightly off-white for better contrast */
     text-decoration: none;
     border-radius: 30px;
     font-weight: 600;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); /* improves readability */
 }
 
+/* Hover effect */
 .btn:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+    background: linear-gradient(to right, #0066cc, #00aaff);
 }
