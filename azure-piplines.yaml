@@ -96,16 +96,23 @@ stages:
       
       - script: |
           echo "Deploying to Namespace: ${{ parameters.namespace }}"
+          
+          kubectl get namespace ${{ parameters.namespace }} || kubectl create namespace ${{ parameters.namespace }}
+
           kubectl create secret docker-registry acr-secret \
-          --docker-server=$(ACR_USERNAME).azurecr.io \
+          --docker-server=${{ parameters.acr_name }}.azurecr.io \
           --docker-username=$(ACR_USERNAME) \
           --docker-password=$(ACR_PASSWORD) \
-          --namespace=${{ parameters.namespace }}
+          --namespace=${{ parameters.namespace }} --dry-run=client -o yaml | kubectl apply -f -
 
           kubectl apply -f deployment.yaml -n ${{ parameters.namespace }} --validate=false
           kubectl apply -f service.yaml -n ${{ parameters.namespace }} --validate=false
+
+          echo "Waiting for LoadBalancer IP..."
           sleep 15
+
           kubectl get svc myappabb-service -n ${{ parameters.namespace }}
-          echo " Get the External IP of the sevice and access the application in your browser"
+          echo "Get the External IP of the service and open it in your browser."
         displayName: 'Apply Kubernetes Deployment (Validation Off)'
+
 
